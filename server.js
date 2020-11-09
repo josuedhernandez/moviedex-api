@@ -40,7 +40,7 @@ function handleGetMovie(req, res) {
 
   if (avg_vote) {
     resArray = resArray.filter((movie_) =>
-      Number(avg_vote) <= movie_.avg_vote
+      Number(avg_vote) <= Number(movie_.avg_vote)
     );
   }
 
