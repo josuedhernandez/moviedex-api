@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
-const cors = require('cors');
-const helmet = require('helmet');
+const cors = require("cors");
+const helmet = require("helmet");
 const MOVIEDEX = require("./moviedex.js");
 
 const app = express();
@@ -28,15 +28,21 @@ function handleGetMovie(req, res) {
 
   if (genre) {
     resArray = resArray.filter((movie_) =>
-      movie_.name.toLowerCase().includes(name.toLowerCase())
+      movie_.genre.toLowerCase().includes(genre.toLowerCase())
     );
   }
 
-  // if (type) {
-  //   resArray = resArray.filter(
-  //     (pokemon_) => pokemon_.type.includes(type)
-  //   );
-  // }
+  if (country) {
+    resArray = resArray.filter((movie_) =>
+      movie_.country.toLowerCase().includes(country.toLowerCase())
+    );
+  }
+
+  if (avg_vote) {
+    resArray = resArray.filter((movie_) =>
+      Number(avg_vote) <= movie_.avg_vote
+    );
+  }
 
   res.json(resArray);
 }
