@@ -3,7 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require('cors');
 const helmet = require('helmet');
-const MOVIEDEX = require("./movidex.json");
+const MOVIEDEX = require("./moviedex.js");
 
 const app = express();
 
