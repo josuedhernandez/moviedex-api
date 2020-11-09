@@ -3,7 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require('cors');
 const helmet = require('helmet');
-const POKEDEX = require("./movidex.json");
+const MOVIEDEX = require("./movidex.json");
 
 const app = express();
 
@@ -22,38 +22,26 @@ app.use(function validateBearerToken(req, res, next) {
   next();
 });
 
-function handleGetTypes(req, res) {
-  res.json(validTypes);
-}
+function handleGetMovie(req, res) {
+  const { genre, country, avg_vote } = req.query;
+  let resArray = MOVIEDEX;
 
-app.get("/types", handleGetTypes);
-
-function handleGetPokemon(req, res) {
-  const { name, type } = req.query;
-
-  if (type) {
-    if (!validTypes.includes(type)) {
-      res.status(400).send("Invalid Request. Enter a Valid type");
-    }
-  }
-
-  let resArray = POKEDEX.pokemon;
-  if (name) {
-    resArray = POKEDEX.pokemon.filter((pokemon_) =>
-      pokemon_.name.toLowerCase().includes(name.toLowerCase())
+  if (genre) {
+    resArray = resArray.filter((movie_) =>
+      movie_.name.toLowerCase().includes(name.toLowerCase())
     );
   }
 
-  if (type) {
-    resArray = resArray.filter(
-      (pokemon_) => pokemon_.type.includes(type)
-    );
-  }
+  // if (type) {
+  //   resArray = resArray.filter(
+  //     (pokemon_) => pokemon_.type.includes(type)
+  //   );
+  // }
 
   res.json(resArray);
 }
 
-app.get("/pokemon", handleGetPokemon);
+app.get("/movie", handleGetMovie);
 
 const PORT = 8000;
 app.listen(PORT, () => {
